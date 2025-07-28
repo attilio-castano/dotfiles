@@ -1,3 +1,6 @@
+# Load personal configuration
+source ~/.zsh/config.zsh
+
 # XDG Base Directory Specification
 # Defines standard locations for user files to keep home directory clean
 
