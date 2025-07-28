@@ -1,9 +1,12 @@
-# Load personal configuration
-source ~/.zsh/config.zsh
+# Zsh environment variables - loaded by all zsh instances
 
-# XDG Base Directory Specification
-# Defines standard locations for user files to keep home directory clean
+# Dotfiles repository path (dynamically detected from this file's location)
+export DOTFILES="${${(%):-%x}:h:h}"
 
+# Load personal configuration variables (USER_NAME, USER_EMAIL, etc.)
+source "$DOTFILES/zsh/.zsh/config.zsh"
+
+# XDG Base Directory Specification - standard locations for user files
 export XDG_CONFIG_HOME="${HOME}/.config"    # Configuration files (dotfiles, app settings)
 export XDG_CACHE_HOME="${HOME}/.cache"      # Cache files (temporary, can be deleted safely)
 export XDG_DATA_HOME="${HOME}/.local/share" # Data files (user data, application data)
