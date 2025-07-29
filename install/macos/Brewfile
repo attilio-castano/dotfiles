@@ -20,6 +20,7 @@ brew "tmux"
 brew "neovim"
 brew "fnm"
 brew "libpq"
+brew "zsh-syntax-highlighting"
 brew "sst/tap/opencode"
 
 # Applications (Casks)
