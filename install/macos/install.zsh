@@ -4,19 +4,10 @@
 
 set -e
 
-install_homebrew() {
-    if ! command -v brew &> /dev/null; then
-        echo "📦 Installing Homebrew..."
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        
-        # Add Homebrew to PATH for Apple Silicon Macs
-        if [[ -f "/opt/homebrew/bin/brew" ]]; then
-            eval "$(/opt/homebrew/bin/brew shellenv)"
-        fi
-    else
-        echo "📦 Homebrew already installed"
-    fi
-}
+# Source homebrew setup from tools directory
+SCRIPT_DIR="$(dirname "$0")"
+TOOLS_DIR="$SCRIPT_DIR/../../config/zsh/.zsh/tools"
+source "$TOOLS_DIR/homebrew.zsh"
 
 install_packages() {
     local brewfile_path="$(dirname "$0")/Brewfile"
