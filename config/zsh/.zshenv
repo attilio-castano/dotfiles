@@ -1,10 +1,10 @@
 # Zsh environment variables - loaded by all zsh instances
 
 # Dotfiles repository path (dynamically detected from this file's location)
-export DOTFILES="${${(%):-%x}:h:h}"
+export DOTFILES="${${(%):-%x}:h:h:h}"
 
 # Load personal configuration variables (USER_NAME, USER_EMAIL, etc.)
-source "$DOTFILES/zsh/.zsh/config.zsh"
+source "$DOTFILES/config/zsh/.zsh/config.zsh"
 
 # XDG Base Directory Specification - standard locations for user files
 export XDG_CONFIG_HOME="${HOME}/.config"    # Configuration files (dotfiles, app settings)
