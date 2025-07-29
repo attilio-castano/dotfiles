@@ -1,15 +1,20 @@
 # PostgreSQL client tools configuration
 # Cross-platform PATH setup for psql, pg_dump, etc.
 
-# macOS (Homebrew)
+# Source path utility function
+source "$(dirname "$0")/../core/path.zsh"
+
+# macOS (Homebrew Apple Silicon)
 if [[ -d "/opt/homebrew/opt/libpq/bin" ]]; then
-    export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
-# macOS (Intel Homebrew)
+    path_add "/opt/homebrew/opt/libpq/bin"
+# macOS (Homebrew Intel)
 elif [[ -d "/usr/local/opt/libpq/bin" ]]; then
-    export PATH="/usr/local/opt/libpq/bin:$PATH"
+    path_add "/usr/local/opt/libpq/bin"
 # Linux (common locations)
 elif [[ -d "/usr/lib/postgresql/bin" ]]; then
-    export PATH="/usr/lib/postgresql/bin:$PATH"
+    path_add "/usr/lib/postgresql/bin"
 elif [[ -d "/usr/pgsql-*/bin" ]]; then
-    export PATH="$(ls -d /usr/pgsql-*/bin | head -1):$PATH"
+    # Find the newest PostgreSQL version
+    local pgsql_bin=$(ls -d /usr/pgsql-*/bin 2>/dev/null | head -1)
+    [[ -n "$pgsql_bin" ]] && path_add "$pgsql_bin"
 fi

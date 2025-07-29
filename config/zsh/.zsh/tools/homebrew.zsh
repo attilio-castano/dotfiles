@@ -1,6 +1,9 @@
 # Homebrew package manager setup
 # Cross-platform Homebrew installation and configuration
 
+# Source path utility function
+source "$(dirname "$0")/../core/path.zsh"
+
 install_homebrew() {
     if ! command -v brew &> /dev/null; then
         echo "📦 Installing Homebrew..."
@@ -15,15 +18,25 @@ install_homebrew() {
 
 setup_homebrew_path() {
     # Add Homebrew to PATH for Apple Silicon Macs
-    if [[ -f "/opt/homebrew/bin/brew" ]]; then
-        eval "$(/opt/homebrew/bin/brew shellenv)"
+    if [[ -d "/opt/homebrew/bin" ]]; then
+        path_add "/opt/homebrew/bin"
+        path_add "/opt/homebrew/sbin"
+        # Set other Homebrew environment variables
+        export HOMEBREW_PREFIX="/opt/homebrew"
+        export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
+        export HOMEBREW_REPOSITORY="/opt/homebrew"
     # Add Homebrew to PATH for Intel Macs
-    elif [[ -f "/usr/local/bin/brew" ]]; then
-        eval "$(/usr/local/bin/brew shellenv)"
+    elif [[ -d "/usr/local/bin" ]] && [[ -f "/usr/local/bin/brew" ]]; then
+        path_add "/usr/local/bin"
+        path_add "/usr/local/sbin"
+        # Set other Homebrew environment variables
+        export HOMEBREW_PREFIX="/usr/local"
+        export HOMEBREW_CELLAR="/usr/local/Cellar"
+        export HOMEBREW_REPOSITORY="/usr/local/Homebrew"
     fi
 }
 
 # Configure Homebrew PATH if it exists (for shell configuration)
-if command -v brew >/dev/null 2>&1; then
+if command -v brew >/dev/null 2>&1 || [[ -f "/opt/homebrew/bin/brew" ]] || [[ -f "/usr/local/bin/brew" ]]; then
     setup_homebrew_path
 fi
