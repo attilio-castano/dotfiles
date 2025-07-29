@@ -4,10 +4,11 @@
 
 set -e
 
-# Source homebrew setup from tools directory
-SCRIPT_DIR="$(dirname "$0")"
-TOOLS_DIR="$SCRIPT_DIR/../../config/zsh/.zsh/tools"
-source "$TOOLS_DIR/homebrew.zsh"
+# Source all tool configurations before installation
+TOOLS_DIR="$DOTFILES/config/zsh/.zsh/tools"
+for tool_config in "$TOOLS_DIR"/*.zsh; do
+    [[ -f "$tool_config" ]] && source "$tool_config"
+done
 
 install_packages() {
     local brewfile_path="$(dirname "$0")/Brewfile"

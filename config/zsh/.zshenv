@@ -4,7 +4,10 @@
 export DOTFILES="${${(%):-%x}:h:h:h}"
 
 # Load personal configuration variables (USER_NAME, USER_EMAIL, etc.)
-source "$DOTFILES/config/zsh/.zsh/config.zsh"
+source "$DOTFILES/config/zsh/.zsh/core/config.zsh"
+
+# Load path utility function for consistent PATH management
+source "$DOTFILES/config/zsh/.zsh/core/path.zsh"
 
 # XDG Base Directory Specification - standard locations for user files
 export XDG_CONFIG_HOME="${HOME}/.config"    # Configuration files (dotfiles, app settings)
@@ -15,3 +18,6 @@ export XDG_STATE_HOME="${HOME}/.local/state" # State files (logs, history, runti
 # XDG-adjacent directories (for consistency/documentation)
 export XDG_BIN_HOME="${HOME}/.local/bin"    # User executables (personal scripts, binaries)
 export XDG_LIB_HOME="${HOME}/.local/lib"    # User libraries (shared libraries, modules)
+
+# Add XDG bin directory to PATH using path utility
+path_add "$XDG_BIN_HOME"

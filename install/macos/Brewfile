@@ -2,6 +2,7 @@
 # Install with: brew bundle --file=install/macos/Brewfile
 
 # Taps
+tap "sst/tap"
 
 # CLI Tools
 brew "uv"
@@ -19,6 +20,7 @@ brew "tmux"
 brew "neovim"
 brew "fnm"
 brew "libpq"
+brew "sst/tap/opencode"
 
 # Applications (Casks)
 cask "ghostty"
