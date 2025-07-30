@@ -8,14 +8,11 @@ if [[ -n "$PLATFORM" ]] && [[ -d "$DOTFILES/install/$PLATFORM/shell" ]]; then
     done
 fi
 
-# Load platform-independent functions
-if [[ -d "$DOTFILES/config/zsh/.zsh/functions" ]]; then
-    for func in "$DOTFILES/config/zsh/.zsh/functions"/*.zsh(N); do
-        source "$func"
+# Load all interactive shell configurations
+if [[ -d "$DOTFILES/config/zsh/.zsh/rc" ]]; then
+    for rc_file in "$DOTFILES/config/zsh/.zsh/rc"/*.zsh(N); do
+        source "$rc_file"
     done
 fi
-
-# Source aliases
-[[ -f "$DOTFILES/config/zsh/.zsh/core/aliases.zsh" ]] && source "$DOTFILES/config/zsh/.zsh/core/aliases.zsh"
 
 # Interactive shell configuration can go here

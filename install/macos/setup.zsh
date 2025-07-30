@@ -6,8 +6,8 @@
 set -e
 
 # Source required utilities
-source "$DOTFILES/config/zsh/.zsh/core/platform.zsh"
-source "$DOTFILES/config/zsh/.zsh/core/path.zsh"
+source "$DOTFILES/config/zsh/.zsh/env/platform.zsh"
+source "$DOTFILES/config/zsh/.zsh/env/path.zsh"
 source "$DOTFILES/install/macos/shell/homebrew.zsh"
 
 main() {

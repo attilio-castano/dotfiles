@@ -3,14 +3,10 @@
 # Dotfiles repository path (dynamically detected from this file's location)
 export DOTFILES="${${(%):-%x}:h:h:h}"
 
-# Load platform detection utilities first
-source "$DOTFILES/config/zsh/.zsh/core/platform.zsh"
-
-# Load personal configuration variables (USER_NAME, USER_EMAIL, etc.)
-source "$DOTFILES/config/zsh/.zsh/core/config.zsh"
-
-# Load path utility function for consistent PATH management
-source "$DOTFILES/config/zsh/.zsh/core/path.zsh"
+# Load all environment configuration files
+for env_file in "$DOTFILES/config/zsh/.zsh/env"/*.zsh(N); do
+    source "$env_file"
+done
 
 # XDG Base Directory Specification - standard locations for user files
 export XDG_CONFIG_HOME="${HOME}/.config"    # Configuration files (dotfiles, app settings)
