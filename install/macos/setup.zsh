@@ -17,21 +17,10 @@ main() {
     install_homebrew
     
     # Phase 2: Install Homebrew packages
-    if command -v brew &> /dev/null; then
-        echo "📋 Installing packages from Brewfile..."
-        brew bundle --file="$DOTFILES/install/macos/Brewfile"
-    else
-        echo "❌ Error: Homebrew not found"
-        return 1
-    fi
+    install_homebrew_packages
     
     # Phase 3: Setup Node.js environment (required for npm tools)
-    if command -v fnm &> /dev/null; then
-        echo "🟢 Setting up Node.js environment..."
-        eval "$(fnm env)"
-        fnm install --lts
-        fnm use lts-latest
-    fi
+    setup_nodejs
     
     # Phase 4: Install npm-based tools
     if command -v npm &> /dev/null; then
