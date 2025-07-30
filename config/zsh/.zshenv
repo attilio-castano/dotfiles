@@ -3,6 +3,9 @@
 # Dotfiles repository path (dynamically detected from this file's location)
 export DOTFILES="${${(%):-%x}:h:h:h}"
 
+# Load platform detection utilities first
+source "$DOTFILES/config/zsh/.zsh/core/platform.zsh"
+
 # Load personal configuration variables (USER_NAME, USER_EMAIL, etc.)
 source "$DOTFILES/config/zsh/.zsh/core/config.zsh"
 
