@@ -2,9 +2,9 @@
 # Install with: brew bundle --file=install/macos/Brewfile
 
 # Taps
-tap "sst/tap"
 
 # CLI Tools
+brew "stow"
 brew "uv"
 brew "bat"
 brew "gum"
@@ -22,7 +22,6 @@ brew "neovim"
 brew "fnm"
 brew "libpq"
 brew "zsh-syntax-highlighting"
-brew "sst/tap/opencode"
 
 # Applications (Casks)
 cask "ghostty"

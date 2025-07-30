@@ -1,6 +1,5 @@
 #!/usr/bin/env zsh
-# Temporary Claude Code installation script
-# TODO: Decide final location for this - maybe add to npm global packages list
+# Claude Code installation script
 
 install_claude_code() {
     if command -v npm >/dev/null 2>&1; then

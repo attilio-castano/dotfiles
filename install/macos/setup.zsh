@@ -1,32 +1,43 @@
 #!/usr/bin/env zsh
-# One-time macOS setup script
-# Installs Homebrew and packages from Brewfile
+# macOS setup script - orchestrates installation of all tools
 # Assumes DOTFILES environment variable is set (via .zshenv)
 
 set -e
 
-# Source required utilities
-source "$DOTFILES/config/zsh/.zsh/profile/platform.zsh"
-source "$DOTFILES/config/zsh/.zsh/profile/path.zsh"
-source "$DOTFILES/install/macos/shell/homebrew.zsh"
+# Source all tool installers
+for tool in "$DOTFILES/install/macos/tools"/*.zsh(N); do
+    source "$tool"
+done
 
 main() {
     echo "🍎 Setting up macOS..."
     echo "📁 Using DOTFILES: $DOTFILES"
     
-    # Install Homebrew if needed
+    # Phase 1: Install Homebrew (required for most other tools)
     install_homebrew
     
-    # Set OpenCode installation directory before installing packages
-    export OPENCODE_INSTALL_DIR="$XDG_BIN_HOME"
-    
-    # Install packages from Brewfile
+    # Phase 2: Install Homebrew packages
     if command -v brew &> /dev/null; then
         echo "📋 Installing packages from Brewfile..."
         brew bundle --file="$DOTFILES/install/macos/Brewfile"
     else
         echo "❌ Error: Homebrew not found"
         return 1
+    fi
+    
+    # Phase 3: Setup Node.js environment (required for npm tools)
+    if command -v fnm &> /dev/null; then
+        echo "🟢 Setting up Node.js environment..."
+        eval "$(fnm env)"
+        fnm install --lts
+        fnm use lts-latest
+    fi
+    
+    # Phase 4: Install npm-based tools
+    if command -v npm &> /dev/null; then
+        echo "📦 Installing npm-based tools..."
+        install_opencode
+        install_claude_code
     fi
     
     echo "✅ macOS setup complete!"
