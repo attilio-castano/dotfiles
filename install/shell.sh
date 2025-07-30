@@ -20,7 +20,7 @@ change_shell_to_zsh() {
             chsh -s "$ZSH_PATH"
             echo "Shell changed for future logins."
             echo "Switching to zsh immediately..."
-            exec zsh
+            exec zsh -l
         else
             echo "zsh is already the default shell"
         fi
