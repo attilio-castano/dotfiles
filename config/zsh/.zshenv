@@ -1,12 +1,8 @@
 # Zsh environment variables - loaded by all zsh instances
+# Keep this minimal for performance - only essentials needed by all shells/scripts
 
 # Dotfiles repository path (dynamically detected from this file's location)
 export DOTFILES="${${(%):-%x}:h:h:h}"
-
-# Load all environment configuration files
-for env_file in "$DOTFILES/config/zsh/.zsh/env"/*.zsh(N); do
-    source "$env_file"
-done
 
 # XDG Base Directory Specification - standard locations for user files
 export XDG_CONFIG_HOME="${HOME}/.config"    # Configuration files (dotfiles, app settings)
@@ -18,5 +14,5 @@ export XDG_STATE_HOME="${HOME}/.local/state" # State files (logs, history, runti
 export XDG_BIN_HOME="${HOME}/.local/bin"    # User executables (personal scripts, binaries)
 export XDG_LIB_HOME="${HOME}/.local/lib"    # User libraries (shared libraries, modules)
 
-# Add XDG bin directory to PATH using path utility
-path_add "$XDG_BIN_HOME"
+# Add essential directories to PATH
+export PATH="$XDG_BIN_HOME:$PATH"
