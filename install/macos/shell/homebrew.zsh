@@ -1,39 +1,23 @@
-# Homebrew configuration for macOS
-# This file is sourced every shell session
+# Homebrew installation function for macOS
+# This file is only sourced during setup
 
-# Setup Homebrew environment based on architecture
-if is_apple_silicon; then
-    BREW_PREFIX="/opt/homebrew"
-else
-    BREW_PREFIX="/usr/local"
-fi
-
-# Configure Homebrew if installed
-if [[ -f "$BREW_PREFIX/bin/brew" ]]; then
-    # Add Homebrew to PATH
-    path_add "$BREW_PREFIX/bin"
-    path_add "$BREW_PREFIX/sbin"
-    
-    # Set Homebrew environment variables
-    export HOMEBREW_PREFIX="$BREW_PREFIX"
-    export HOMEBREW_CELLAR="$BREW_PREFIX/Cellar"
-    export HOMEBREW_REPOSITORY="$BREW_PREFIX"
-    
-    # Use Homebrew's shellenv if available (includes completions, etc.)
-    if [[ -x "$BREW_PREFIX/bin/brew" ]]; then
-        eval "$("$BREW_PREFIX/bin/brew" shellenv)"
-    fi
-fi
-
-# Function to install Homebrew (can be called manually)
+# Function to install Homebrew
 install_homebrew() {
     if ! command -v brew &> /dev/null; then
         echo "📦 Installing Homebrew..."
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         
+        # Determine where Homebrew was installed
+        local brew_prefix
+        if is_apple_silicon; then
+            brew_prefix="/opt/homebrew"
+        else
+            brew_prefix="/usr/local"
+        fi
+        
         # Setup for current session after install
-        if [[ -f "$BREW_PREFIX/bin/brew" ]]; then
-            eval "$("$BREW_PREFIX/bin/brew" shellenv)"
+        if [[ -f "$brew_prefix/bin/brew" ]]; then
+            eval "$("$brew_prefix/bin/brew" shellenv)"
         fi
         
         echo "📦 Homebrew installed successfully"
