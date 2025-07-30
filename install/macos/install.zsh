@@ -4,14 +4,19 @@
 
 set -e
 
-# Source pre-install tool configurations
-TOOLS_DIR="$DOTFILES/config/zsh/.zsh/tools"
-for tool_config in "$TOOLS_DIR"/*.zsh; do
-    [[ -f "$tool_config" ]] && source "$tool_config"
-done
+# Get the directory where this script is located
+SCRIPT_DIR="$(dirname "$0")"
+
+# Source pre-install configurations
+PRE_INSTALL_DIR="$SCRIPT_DIR/pre-install"
+if [[ -d "$PRE_INSTALL_DIR" ]]; then
+    for config in "$PRE_INSTALL_DIR"/*.zsh; do
+        [[ -f "$config" ]] && source "$config"
+    done
+fi
 
 install_packages() {
-    local brewfile_path="$(dirname "$0")/Brewfile"
+    local brewfile_path="$SCRIPT_DIR/Brewfile"
     
     if [[ -f "$brewfile_path" ]]; then
         echo "📋 Installing packages from Brewfile..."
@@ -24,15 +29,21 @@ install_packages() {
 
 main() {
     echo "🍎 Setting up macOS packages..."
+    
+    # Run pre-install setup (like installing Homebrew)
     install_homebrew
+    
+    # Install packages
     install_packages
     
-    # Source post-install function configurations
+    # Source post-install configurations
     echo "⚙️  Configuring installed tools..."
-    FUNCTIONS_DIR="$DOTFILES/config/zsh/.zsh/functions"
-    for func_config in "$FUNCTIONS_DIR"/*.zsh; do
-        [[ -f "$func_config" ]] && source "$func_config"
-    done
+    POST_INSTALL_DIR="$SCRIPT_DIR/post-install"
+    if [[ -d "$POST_INSTALL_DIR" ]]; then
+        for config in "$POST_INSTALL_DIR"/*.zsh; do
+            [[ -f "$config" ]] && source "$config"
+        done
+    fi
     
     echo "✅ macOS setup complete!"
 }

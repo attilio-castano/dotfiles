@@ -63,6 +63,7 @@ Access Octo from anywhere in Neovim:
 | Command | Description |
 |---------|-------------|
 | `:Octo pr list` | List all pull requests |
+| `:Octo pr list states=MERGED` | List merged pull requests |
 | `:Octo pr search <query>` | Search PRs with specific criteria |
 | `:Octo pr edit <number>` | Edit specific PR |
 | `:Octo pr create` | Create new PR |
