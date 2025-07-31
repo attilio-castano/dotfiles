@@ -1,0 +1,83 @@
+# Show each prompt on a new line
+add_newline = true
+
+# Use JetBrainsMono Nerd Font for icons (Ghostty-friendly)
+# Prompt character
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[✗](bold red)"
+vicmd_symbol = "[❮](bold yellow)"
+
+# Username (always visible, clean)
+[username]
+show_always = true
+style_user = "bold cyan"
+
+# Hostname (only show for SSH sessions)
+[hostname]
+ssh_only = true
+style = "bold purple"
+
+# Current directory
+[directory]
+truncation_length = 3
+truncation_symbol = "…/"
+style = "bold blue"
+
+# Git branch
+[git_branch]
+symbol = " "
+style = "bold magenta"
+
+# Git status symbols
+[git_status]
+style = "red"
+format = '([\[$all_status$ahead_behind\]]($style) )'
+ahead = "⇡"
+behind = "⇣"
+diverged = "⇕"
+conflicted = "⚔"
+untracked = "?"
+stashed = "📦"
+modified = "✚"
+staged = "+"
+deleted = "✖"
+
+# Python venv or version
+[python]
+symbol = "🐍 "
+style = "yellow"
+format = 'via [$symbol$version ($virtualenv)]($style) '
+detect_extensions = ["py"]
+detect_files = ["pyproject.toml", "requirements.txt", ".python-version"]
+
+# Node.js version
+[nodejs]
+symbol = " "
+format = 'via [$symbol$version]($style) '
+style = "green"
+
+# Rust (just in case)
+[rust]
+symbol = "🦀 "
+format = 'via [$symbol$version]($style) '
+style = "red"
+
+# Time (optional, uncomment to enable)
+# [time]
+# disabled = false
+# format = '🕒 [$time]($style) '
+# style = "dimmed white"
+# time_format = "%R"  # 24h format
+
+# Command duration (only shows if > 2s)
+[cmd_duration]
+min_time = 2000
+format = "⏱ [$duration]($style) "
+style = "bold yellow"
+
+[aws]
+disabled = true
+
+# Optional: customize prompt format (order of modules)
+# format = """$username@$hostname $directory $git_branch $git_status $python $nodejs $character"""

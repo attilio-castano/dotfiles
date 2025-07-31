@@ -1,0 +1,32 @@
+# Homebrew packages for macOS
+# Install with: brew bundle --file=install/macos/Brewfile
+
+# Taps
+
+# CLI Tools
+brew "stow"
+brew "uv"
+brew "bat"
+brew "gum"
+brew "rich-cli"
+brew "fzf"
+brew "zoxide"
+brew "ripgrep"
+brew "eza"
+brew "fd"
+brew "tree"
+brew "starship"
+brew "git"
+brew "gh"
+brew "lazygit"
+brew "lazydocker"
+brew "tmux"
+brew "neovim"
+brew "fnm"
+brew "libpq"
+brew "zsh-syntax-highlighting"
+
+# Applications (Casks)
+cask "ghostty"
+
+# Fonts
