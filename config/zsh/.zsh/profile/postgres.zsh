@@ -1,6 +1,10 @@
 # PostgreSQL tools PATH configuration
 # Adds libpq tools (psql, pg_dump, etc.) to PATH if installed
 
+# Source dependencies
+[[ -f "$DOTFILES/config/zsh/.zsh/profile/platform.zsh" ]] && source "$DOTFILES/config/zsh/.zsh/profile/platform.zsh"
+[[ -f "$DOTFILES/config/zsh/.zsh/profile/path.zsh" ]] && source "$DOTFILES/config/zsh/.zsh/profile/path.zsh"
+
 # PostgreSQL tools via Homebrew (macOS)
 if is_macos && command -v brew &> /dev/null; then
     local libpq_path="$(brew --prefix 2>/dev/null)/opt/libpq/bin"

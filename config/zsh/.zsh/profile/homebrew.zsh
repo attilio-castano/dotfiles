@@ -1,6 +1,10 @@
 # Homebrew environment setup
 # Only loads on macOS when Homebrew is installed
 
+# Source dependencies
+[[ -f "$DOTFILES/config/zsh/.zsh/profile/platform.zsh" ]] && source "$DOTFILES/config/zsh/.zsh/profile/platform.zsh"
+[[ -f "$DOTFILES/config/zsh/.zsh/profile/path.zsh" ]] && source "$DOTFILES/config/zsh/.zsh/profile/path.zsh"
+
 # Only configure on macOS
 if is_macos; then
     # Determine Homebrew prefix based on architecture

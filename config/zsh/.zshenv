@@ -2,7 +2,8 @@
 # Keep this minimal for performance - only essentials needed by all shells/scripts
 
 # Dotfiles repository path (dynamically detected from this file's location)
-export DOTFILES="${${(%):-%x}:h:h:h}"
+# The :A modifier resolves symlinks to get the real path
+export DOTFILES="${${(%):-%x}:A:h:h:h}"
 
 # XDG Base Directory Specification - standard locations for user files
 export XDG_CONFIG_HOME="${HOME}/.config"    # Configuration files (dotfiles, app settings)
