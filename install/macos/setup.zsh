@@ -13,16 +13,19 @@ main() {
     echo "🍎 Setting up macOS..."
     echo "📁 Using DOTFILES: $DOTFILES"
     
-    # Phase 1: Install Homebrew (required for most other tools)
+    # Phase 1: Install Xcode Command Line Tools (required for build tools)
+    install_xcode_tools
+    
+    # Phase 2: Install Homebrew (required for most other tools)
     install_homebrew
     
-    # Phase 2: Install Homebrew packages
+    # Phase 3: Install Homebrew packages
     install_homebrew_packages
     
-    # Phase 3: Setup Node.js environment (required for npm tools)
+    # Phase 4: Setup Node.js environment (required for npm tools)
     setup_nodejs
     
-    # Phase 4: Install npm-based tools
+    # Phase 5: Install npm-based tools
     if command -v npm &> /dev/null; then
         echo "📦 Installing npm-based tools..."
         install_opencode
