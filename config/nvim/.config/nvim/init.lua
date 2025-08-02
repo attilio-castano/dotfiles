@@ -17,16 +17,11 @@ local in_ghostty = require("util.ghostty").active
 vim.opt.termguicolors = true
 vim.opt.background   = "dark"
 
+-- Note: Transparent backgrounds are handled by Catppuccin in colorscheme.lua
+-- We only set diagnostic undercurls here for better visibility
 if in_ghostty then
-    -- inherit Ghostty’s translucent background
-    vim.api.nvim_set_hl(0, "Normal",       { bg = "none" })
-    vim.api.nvim_set_hl(0, "NormalFloat",  { bg = "none" })
-    -- Diagnostic undercurls that pop on a dark glassy backdrop
     vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { undercurl = true, sp = "#ff5c5c" })
     vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn",  { undercurl = true, sp = "#f0e130" })
-else
-    -- For non-Ghostty terminals we keep opaque background; colourscheme is
-    -- selected later (gruvbox fallback) by lua/plugins/colorscheme.lua
 end
 
 -----------------------------------------------------------------------
@@ -78,6 +73,8 @@ require("lazy").setup({
   require("plugins.whichkey"),    -- keybinding hints
   require("plugins.telescope"),   -- fuzzy finder
   require("plugins.render-markdown"), -- beautiful markdown rendering in terminal
+  require("plugins.dashboard"),   -- startup screen with recent files
+  require("plugins.ascii"),       -- ASCII art collection
   -- Add more plugins here
 })
 
@@ -96,11 +93,4 @@ map("n", "<leader>m", "<cmd>RenderMarkdown toggle<cr>", { desc = "Toggle markdow
 -- Clipboard yank keybindings
 map("v", "<leader>y", '"+y', { desc = "Yank to clipboard" })
 map("n", "<leader>y", '"+y', { desc = "Yank to clipboard" })
--- GitHub integration (Octo)
-map("n", "<leader>go", "<cmd>Octo<cr>", { desc = "Open Octo" })
-map("n", "<leader>gpr", "<cmd>Octo pr list<cr>", { desc = "List PRs" })
-map("n", "<leader>gpi", "<cmd>Octo issue list<cr>", { desc = "List issues" })
-map("n", "<leader>gpc", "<cmd>Octo pr create<cr>", { desc = "Create PR" })
-map("n", "<leader>gic", "<cmd>Octo issue create<cr>", { desc = "Create issue" })
--- (Nvim‑tree mapping declared in its plugin spec above)
 

@@ -20,6 +20,20 @@
 - Seamless key management across different environments
 - Better user feedback about SSH agent status
 
+## Neovim Dashboard & Project Management
+
+### Dashboard Improvements
+- [ ] Add project management integration to dashboard
+- [ ] Show recent projects alongside recent files
+- [ ] Add quick project switching from dashboard
+- [ ] Customize dashboard shortcuts for common workflows
+
+### Telescope Project Integration
+- [ ] Add project.nvim plugin for project detection and management
+- [ ] Configure telescope-project picker for finding directories
+- [ ] Set up keybindings for quick project switching
+- [ ] Integrate with dashboard for seamless project navigation
+
 ## Future Enhancements
 - [ ] Add more installation scripts (homebrew, packages, fonts)
 - [ ] Create bootstrap script for one-command setup

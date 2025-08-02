@@ -36,6 +36,12 @@ return {
 
       -- Apply the colourscheme now that it's guaranteed to be available.
       vim.cmd.colorscheme("catppuccin-mocha")
+      
+      -- Ensure floating windows are transparent in Ghostty
+      if require("util.ghostty").active then
+        vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+        vim.api.nvim_set_hl(0, "FloatBorder", { bg = "none" })
+      end
     end,
   },
 }
