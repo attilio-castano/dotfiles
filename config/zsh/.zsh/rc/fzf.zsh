@@ -49,7 +49,7 @@ fi
 # ALT-C - cd into the selected directory
 if command -v fd &> /dev/null; then
     export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
-    export FZF_ALT_C_OPTS="--preview 'ls -la {}'"
+    export FZF_ALT_C_OPTS="--preview 'eza -la --icons --color=always {}'"
 fi
 
 # CTRL-R - Paste the selected command from history into the command line
@@ -74,7 +74,7 @@ fe() {
 # Find and cd to any directory
 fcd() {
     local dir
-    dir=$(fd --type d --hidden --exclude .git --exclude node_modules --exclude Library --max-depth 5 | fzf --bind "esc:abort" --preview "ls -la {}" --preview-window=right:60%)
+    dir=$(fd --type d --hidden --exclude .git --exclude node_modules --exclude Library --max-depth 5 | fzf --bind "esc:abort" --preview "eza -la --icons --color=always {}" --preview-window=right:60%)
     [[ -n "$dir" ]] && cd "$dir"
 }
 
@@ -86,7 +86,7 @@ zf() {
     fi
     
     local dir
-    dir=$(zoxide query -l | fzf --bind "esc:abort" --preview "realpath {} 2>/dev/null && echo && ls -la {}" --preview-window=right:60%)
+    dir=$(zoxide query -l | fzf --bind "esc:abort" --preview "realpath {} 2>/dev/null && echo && eza -la --icons --color=always {}" --preview-window=right:60%)
     [[ -n "$dir" ]] && cd "$dir"
 }
 
@@ -130,7 +130,7 @@ fp() {
         fd --type d --hidden --glob ".git" ~/Developer ~/Projects 2>/dev/null | 
         sed 's/\/.git\/$//' | 
         fzf --bind "esc:abort" \
-            --preview "ls -la {} && echo && git -C {} status -sb" \
+            --preview "eza -la --icons --color=always {} && echo && git -C {} status -sb" \
             --preview-window=right:60%
     )
     [[ -n "$selected_project" ]] && cd "$selected_project"

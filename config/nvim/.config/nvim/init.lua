@@ -93,11 +93,4 @@ map("n", "<leader>m", "<cmd>RenderMarkdown toggle<cr>", { desc = "Toggle markdow
 -- Clipboard yank keybindings
 map("v", "<leader>y", '"+y', { desc = "Yank to clipboard" })
 map("n", "<leader>y", '"+y', { desc = "Yank to clipboard" })
--- GitHub integration (Octo)
-map("n", "<leader>go", "<cmd>Octo<cr>", { desc = "Open Octo" })
-map("n", "<leader>gpr", "<cmd>Octo pr list<cr>", { desc = "List PRs" })
-map("n", "<leader>gpi", "<cmd>Octo issue list<cr>", { desc = "List issues" })
-map("n", "<leader>gpc", "<cmd>Octo pr create<cr>", { desc = "Create PR" })
-map("n", "<leader>gic", "<cmd>Octo issue create<cr>", { desc = "Create issue" })
--- (Nvim‑tree mapping declared in its plugin spec above)
 
