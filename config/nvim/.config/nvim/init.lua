@@ -78,6 +78,8 @@ require("lazy").setup({
   require("plugins.whichkey"),    -- keybinding hints
   require("plugins.telescope"),   -- fuzzy finder
   require("plugins.render-markdown"), -- beautiful markdown rendering in terminal
+  require("plugins.dashboard"),   -- startup screen with recent files
+  require("plugins.ascii"),       -- ASCII art collection
   -- Add more plugins here
 })
 
