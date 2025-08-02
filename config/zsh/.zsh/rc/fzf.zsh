@@ -74,7 +74,7 @@ fe() {
 # Find and cd to any directory
 fcd() {
     local dir
-    dir=$(fd --type d --hidden --exclude .git --exclude node_modules --exclude Library --max-depth 5 | fzf --bind "esc:abort" --preview "ls -la {}" --preview-window=right:50%)
+    dir=$(fd --type d --hidden --exclude .git --exclude node_modules --exclude Library --max-depth 5 | fzf --bind "esc:abort" --preview "ls -la {}" --preview-window=right:60%)
     [[ -n "$dir" ]] && cd "$dir"
 }
 
@@ -86,7 +86,7 @@ zf() {
     fi
     
     local dir
-    dir=$(zoxide query -l | fzf --bind "esc:abort" --preview "realpath {} 2>/dev/null && echo && ls -la {}" --preview-window=right:50%)
+    dir=$(zoxide query -l | fzf --bind "esc:abort" --preview "realpath {} 2>/dev/null && echo && ls -la {}" --preview-window=right:60%)
     [[ -n "$dir" ]] && cd "$dir"
 }
 
@@ -97,7 +97,7 @@ lg() {
         return 1
     fi
     
-    rg --color=always --line-number --no-heading --smart-case "${*:-}" | 
+    rg --hidden --color=always --line-number --no-heading --smart-case "${*:-}" | 
     fzf --ansi \
         --bind "esc:abort" \
         --delimiter : \
@@ -112,12 +112,12 @@ rgl() {
         return 1
     fi
     
-    rg --color=always --line-number --no-heading --smart-case "" | 
+    rg --hidden --color=always --line-number --no-heading --smart-case "" | 
     fzf --ansi \
         --bind "esc:abort" \
         --disabled \
         --query "$1" \
-        --bind "change:reload:rg --color=always --line-number --no-heading --smart-case {q} || true" \
+        --bind "change:reload:rg --hidden --color=always --line-number --no-heading --smart-case {q} || true" \
         --delimiter : \
         --preview "bat --color=always {1} --highlight-line {2}" \
         --preview-window "right:60%:+{2}+3/3"
@@ -158,11 +158,11 @@ gb() {
     
     local branch
     branch=$(
-        git branch -a | 
+        git branch -a --no-color | 
         grep -v HEAD | 
+        sed "s/^[* ]*//" |
         fzf --bind "esc:abort" \
-            --preview "git log --oneline --graph --color=always --decorate {}" | 
-        sed "s/.* //" | 
+            --preview "git log --oneline --graph --color=always --decorate {1} 2>/dev/null || echo 'No commits yet'" | 
         sed "s#remotes/[^/]*/##"
     )
     [[ -n "$branch" ]] && git checkout "$branch"
@@ -194,7 +194,7 @@ fkill() {
 # Search with ripgrep and edit the selected file at the specific line
 rge() {
     local file line
-    read -r file line <<<"$(rg --color=always --line-number --no-heading --smart-case "${*:-}" | fzf --ansi --delimiter : --preview "bat --color=always {1} --highlight-line {2}" --preview-window "right:60%:+{2}+3/3" | awk -F: '{print $1, $2}')"
+    read -r file line <<<"$(rg --hidden --color=always --line-number --no-heading --smart-case "${*:-}" | fzf --ansi --delimiter : --preview "bat --color=always {1} --highlight-line {2}" --preview-window "right:60%:+{2}+3/3" | awk -F: '{print $1, $2}')"
     [[ -n "$file" ]] && ${EDITOR:-nvim} "$file" "+$line"
 }
 

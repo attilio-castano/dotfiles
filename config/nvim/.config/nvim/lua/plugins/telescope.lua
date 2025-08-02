@@ -52,6 +52,11 @@ return {
         pickers = {
           -- Show hidden files too but still honour ignore patterns
           find_files = { hidden = true },
+          live_grep = {
+            additional_args = function()
+              return { "--hidden" }
+            end,
+          },
         },
 
         extensions = {

@@ -17,16 +17,11 @@ local in_ghostty = require("util.ghostty").active
 vim.opt.termguicolors = true
 vim.opt.background   = "dark"
 
+-- Note: Transparent backgrounds are handled by Catppuccin in colorscheme.lua
+-- We only set diagnostic undercurls here for better visibility
 if in_ghostty then
-    -- inherit Ghostty’s translucent background
-    vim.api.nvim_set_hl(0, "Normal",       { bg = "none" })
-    vim.api.nvim_set_hl(0, "NormalFloat",  { bg = "none" })
-    -- Diagnostic undercurls that pop on a dark glassy backdrop
     vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { undercurl = true, sp = "#ff5c5c" })
     vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn",  { undercurl = true, sp = "#f0e130" })
-else
-    -- For non-Ghostty terminals we keep opaque background; colourscheme is
-    -- selected later (gruvbox fallback) by lua/plugins/colorscheme.lua
 end
 
 -----------------------------------------------------------------------
