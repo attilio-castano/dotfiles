@@ -26,6 +26,7 @@ return {
             
             -- Debug: Print args
             print("Debug - args:", vim.inspect(args))
+            -- Test dummy change for PR testing
             
             -- Get config defaults
             local config = require("octo.config").values
