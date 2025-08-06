@@ -19,3 +19,7 @@ alias ....='cd ../../..'
 alias gcm='git commit -m'
 alias gcam='git commit -a -m'
 alias gcad='git commit -a --amend'
+
+# Claude Code
+alias claude-monitor='uvx claude-monitor --plan max20'
+# --plan {pro, max5, max20}

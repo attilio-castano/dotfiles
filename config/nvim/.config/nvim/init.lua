@@ -27,9 +27,33 @@ end
 -----------------------------------------------------------------------
 -- 2. Editor behaviour tweaks (feel free to extend)
 -----------------------------------------------------------------------
-vim.opt.number         = true
+-- Disable built-in line numbers to use custom statuscolumn
+vim.opt.number         = false
 vim.opt.relativenumber = false
 vim.opt.signcolumn     = "yes:1"
+vim.opt.numberwidth    = 5
+
+-- Custom statuscolumn: [sign] [absolute] [relative] - but only for normal buffers
+local function set_statuscolumn()
+  local buftype = vim.bo.buftype
+  local filetype = vim.bo.filetype
+  local bufname = vim.api.nvim_buf_get_name(0)
+  
+  -- Don't show statuscolumn for special buffers
+  if buftype == "" and 
+     filetype ~= "NvimTree" and 
+     filetype ~= "neo-tree" and
+     not string.match(bufname, "NvimTree") then
+    vim.opt_local.statuscolumn = '%s %{v:lnum} %{v:relnum}'
+  else
+    vim.opt_local.statuscolumn = ""
+  end
+end
+
+vim.api.nvim_create_autocmd({"BufEnter", "FileType"}, {
+  pattern = "*",
+  callback = set_statuscolumn,
+})
 vim.opt.clipboard      = "unnamedplus"
 vim.opt.updatetime     = 250
 vim.opt.shiftwidth = 4
