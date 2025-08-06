@@ -195,24 +195,16 @@ return {
       
       local pr_number = args[1] or vim.fn.input("PR number: ")
       
-      -- Debug: Print args
-      print("Debug - args:", vim.inspect(args))
-      print("Debug - pr_number:", pr_number)
-      
       -- Get config defaults
       local config = require("octo.config").values
       local merge_method = config.default_merge_method
       local delete_branch = config.default_delete_branch
       
-      print("Debug - initial merge_method:", merge_method)
-      
       -- Parse arguments to override defaults
       for i, arg in ipairs(args) do
-        print("Debug - processing arg", i, ":", arg)
         if i > 1 then  -- Skip PR number
           if arg == "squash" or arg == "rebase" or arg == "commit" then
             merge_method = arg
-            print("Debug - set merge_method to:", merge_method)
           elseif arg == "delete" then
             delete_branch = true
           elseif arg == "nodelete" then
@@ -235,10 +227,6 @@ return {
       if delete_branch then
         cmd = cmd .. " --delete-branch"
       end
-      
-      print("Debug - final merge_method:", merge_method)
-      print("Debug - final merge_flag:", merge_flag)
-      print("Debug - executing command:", cmd)
       
       vim.cmd(cmd)
     end, {
