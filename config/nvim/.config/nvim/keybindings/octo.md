@@ -124,21 +124,21 @@ Without specifying `delete` or `nodelete`, the command uses your `default_delete
 
 ##### Admin Merge Commands (Custom)
 
-For repositories with branch protection, use admin privileges. Unlike the basic commands, these require a PR number since they use the GitHub CLI directly:
+For repositories with branch protection, use admin privileges. These commands use a custom implementation that properly handles squash merging:
 
 | Command | Description |
 |---------|-------------|
-| `:Octo pr merge_admin <PR>` | Admin merge with defaults |
-| `:Octo pr merge_admin <PR> squash` | Admin squash merge |
-| `:Octo pr merge_admin <PR> rebase` | Admin rebase merge |
-| `:Octo pr merge_admin <PR> commit` | Admin standard merge |
-| `:Octo pr merge_admin <PR> squash delete` | Admin squash merge and delete |
-| `:Octo pr merge_admin <PR> nodelete` | Admin merge and keep branch |
+| `:OctoPrMergeAdmin <PR>` | Admin merge with defaults |
+| `:OctoPrMergeAdmin <PR> squash` | Admin squash merge |
+| `:OctoPrMergeAdmin <PR> rebase` | Admin rebase merge |
+| `:OctoPrMergeAdmin <PR> commit` | Admin standard merge |
+| `:OctoPrMergeAdmin <PR> squash delete` | Admin squash merge and delete |
+| `:OctoPrMergeAdmin <PR> nodelete` | Admin merge and keep branch |
 
 Examples:
-- `:Octo pr merge_admin 42` - Merge PR #42 with admin privileges using defaults
-- `:Octo pr merge_admin 42 squash delete` - Squash merge PR #42 and delete branch
-- `:Octo pr merge_admin` - Will prompt for PR number if not provided
+- `:OctoPrMergeAdmin 42` - Merge PR #42 with admin privileges using defaults
+- `:OctoPrMergeAdmin 42 squash delete` - Squash merge PR #42 and delete branch
+- `:OctoPrMergeAdmin` - Will prompt for PR number if not provided
 
 ##### Configuration Defaults
 

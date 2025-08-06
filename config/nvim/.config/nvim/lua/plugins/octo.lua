@@ -18,49 +18,6 @@ return {
     require("octo").setup({
       default_merge_method = "commit",  -- or "squash" or "rebase"
       default_delete_branch = false,     -- or true if you prefer
-      commands = {
-        pr = {
-          merge_admin = function(opts)
-            local args = vim.split(opts.args or "", " ")
-            local pr_number = args[1] or vim.fn.input("PR number: ")
-            
-            -- Get config defaults
-            local config = require("octo.config").values
-            local merge_method = config.default_merge_method
-            local delete_branch = config.default_delete_branch
-            
-            -- Parse arguments to override defaults
-            for i, arg in ipairs(args) do
-              if i > 1 then  -- Skip PR number
-                if arg == "squash" or arg == "rebase" or arg == "commit" then
-                  merge_method = arg
-                elseif arg == "delete" then
-                  delete_branch = true
-                elseif arg == "nodelete" then
-                  delete_branch = false
-                end
-              end
-            end
-            
-            -- Map merge methods to gh CLI flags
-            local merge_flag = ""
-            if merge_method == "squash" then
-              merge_flag = "--squash"
-            elseif merge_method == "rebase" then
-              merge_flag = "--rebase"
-            else
-              merge_flag = "--merge"
-            end
-            
-            local cmd = "!gh pr merge " .. pr_number .. " " .. merge_flag .. " --admin"
-            if delete_branch then
-              cmd = cmd .. " --delete-branch"
-            end
-            
-            vim.cmd(cmd)
-          end,
-        },
-      },
       default_remote = {"upstream", "origin"},
       ssh_aliases = {},
       reaction_viewer_hint_icon = "",
@@ -228,6 +185,53 @@ return {
           toggle_viewed = { lhs = "<leader><space>", desc = "toggle viewer viewed state" },
         },
       },
+    })
+    
+    -- Create custom merge_admin command
+    vim.api.nvim_create_user_command("OctoPrMergeAdmin", function(opts)
+      local args = vim.split(opts.args or "", "%s+")
+      -- Filter out empty strings
+      args = vim.tbl_filter(function(arg) return arg ~= "" end, args)
+      
+      local pr_number = args[1] or vim.fn.input("PR number: ")
+      
+      -- Get config defaults
+      local config = require("octo.config").values
+      local merge_method = config.default_merge_method
+      local delete_branch = config.default_delete_branch
+      
+      -- Parse arguments to override defaults
+      for i, arg in ipairs(args) do
+        if i > 1 then  -- Skip PR number
+          if arg == "squash" or arg == "rebase" or arg == "commit" then
+            merge_method = arg
+          elseif arg == "delete" then
+            delete_branch = true
+          elseif arg == "nodelete" then
+            delete_branch = false
+          end
+        end
+      end
+      
+      -- Map merge methods to gh CLI flags
+      local merge_flag = ""
+      if merge_method == "squash" then
+        merge_flag = "--squash"
+      elseif merge_method == "rebase" then
+        merge_flag = "--rebase"
+      else
+        merge_flag = "--merge"
+      end
+      
+      local cmd = "!gh pr merge " .. pr_number .. " " .. merge_flag .. " --admin"
+      if delete_branch then
+        cmd = cmd .. " --delete-branch"
+      end
+      
+      vim.cmd(cmd)
+    end, {
+      nargs = "*",
+      desc = "Admin merge PR with optional merge method and branch deletion"
     })
   end,
 }
