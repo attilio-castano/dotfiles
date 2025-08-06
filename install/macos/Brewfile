@@ -25,6 +25,7 @@ brew "neovim"
 brew "fnm"
 brew "libpq"
 brew "zsh-syntax-highlighting"
+brew "btop"
 
 # Applications (Casks)
 cask "ghostty"

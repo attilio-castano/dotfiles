@@ -61,6 +61,7 @@ return {
             },
             view = {
                 width = 32,
+                cursorline = false,
             },
             renderer = { group_empty = true },
             git = { enable = true, ignore = false },

@@ -117,7 +117,7 @@ return {
             hidden = false,
           },
           recent = {
-            folded = true,
+            folded = false,
             hidden = false,
           },
         },
