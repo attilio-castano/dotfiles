@@ -114,6 +114,9 @@ map("n", "<A-k>", "<C-w>k", { desc = "Move to window above" })
 map("n", "<A-l>", "<C-w>l", { desc = "Move to window on the right" })
 -- Toggle markdown rendering
 map("n", "<leader>m", "<cmd>RenderMarkdown toggle<cr>", { desc = "Toggle markdown rendering" })
+-- Split creation keybindings
+map("n", "<leader>h", "<cmd>split<cr>", { desc = "Split horizontal" })
+map("n", "<leader>v", "<cmd>vsplit<cr>", { desc = "Split vertical" })
 -- Clipboard yank keybindings
 map("v", "<leader>y", '"+y', { desc = "Yank to clipboard" })
 map("n", "<leader>y", '"+y', { desc = "Yank to clipboard" })
