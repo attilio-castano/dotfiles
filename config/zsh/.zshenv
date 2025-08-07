@@ -17,3 +17,6 @@ export XDG_LIB_HOME="${HOME}/.local/lib"    # User libraries (shared libraries, 
 
 # Add essential directories to PATH
 export PATH="$XDG_BIN_HOME:$PATH"
+
+# Source user environment variables if the file exists
+[[ -f "$XDG_BIN_HOME/env" ]] && source "$XDG_BIN_HOME/env"
