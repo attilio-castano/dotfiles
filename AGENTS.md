@@ -29,7 +29,8 @@
 - Commit messages: imperative mood with optional scope, e.g., `macos: install Codex via npm`. Follow with short bullets for details. Reference issues as `(#123)` when relevant.
 - Formatting: keep subject ≤72 chars; add a blank line before the body; wrap body at ~100 chars; use Markdown bullets (`-`) and fenced code blocks for commands.
 - Branch naming: short, hyphenated topic (e.g., `codex-npm`, `nvim-keybinds`).
-- Pull requests: clear description, rationale, example commands/output, and any breaking changes. Keep diffs focused; avoid unrelated refactors. Use simple Markdown headings: Summary, Changes, Testing, Notes.
+ - Pull requests: clear description, rationale, example commands/output, and any breaking changes. Keep diffs focused; avoid unrelated refactors. Use simple Markdown headings: Summary, Changes, Testing, Notes.
+ - GitHub CLI: use `--body-file` or `-F` with a Markdown file; avoid `-b` with `\n` since GitHub renders backslashes literally. Write the body via heredoc and pass the file to `gh pr create`.
 
 ## Security & Configuration Tips
 - Ensure `DOTFILES` points to the repo path before running setup.
