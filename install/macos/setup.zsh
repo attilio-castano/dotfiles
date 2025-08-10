@@ -28,6 +28,7 @@ main() {
     # Phase 5: Install npm-based tools
     if command -v npm &> /dev/null; then
         echo "📦 Installing npm-based tools..."
+        install_codex
         install_opencode
         install_claude_code
     fi
