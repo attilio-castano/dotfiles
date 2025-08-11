@@ -18,12 +18,12 @@ Personal development environment configuration.
 
 3. **Create symlinks**
    ```bash
-   stow -v */
+   cd config && stow -v */
    ```
    
    To preview what will happen without making changes:
    ```bash
-   stow -nv */  # Dry run - shows what would be linked
+   cd config && stow -nv */  # Dry run - shows what would be linked
    ```
    
    The setup script will automatically restart your shell when complete.
