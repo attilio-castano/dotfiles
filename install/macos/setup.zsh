@@ -32,6 +32,10 @@ main() {
         install_opencode
         install_claude_code
     fi
+
+    # Phase 6: Install additional user-space tools
+    echo "🧰 Installing additional tools..."
+    install_uv
     
     echo "✅ macOS setup complete!"
     echo "🔄 Restarting shell..."
