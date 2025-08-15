@@ -8,3 +8,5 @@ font-family = JetBrainsMono NFM Regular
 keybind = shift+enter=text:\n
 keybind = cmd+s=new_split:left
 keybind = cmd+shift+s=new_split:up
+
+background-opacity = 1 

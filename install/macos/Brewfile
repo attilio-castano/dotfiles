@@ -5,7 +5,6 @@
 
 # CLI Tools
 brew "stow"
-brew "uv"
 brew "bat"
 brew "gum"
 brew "rich-cli"
