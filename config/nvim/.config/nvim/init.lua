@@ -40,6 +40,19 @@ vim.opt.updatetime     = 250
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 vim.opt.expandtab = true
+
+-- Auto-reload files changed outside of Neovim
+vim.opt.autoread = true
+vim.api.nvim_create_autocmd({ "FocusGained", "TermLeave", "TermClose", "BufEnter", "BufWinEnter" }, {
+  pattern = "*",
+  desc = "Auto-reload changed files on focus/buffer switch",
+  callback = function(args)
+    local bt = vim.bo[args.buf].buftype
+    if bt == "" and vim.bo[args.buf].modifiable then
+      pcall(vim.cmd, "silent! checktime")
+    end
+  end,
+})
 -----------------------------------------------------------------------
 -- 3. Bootstrap lazy.nvim
 -----------------------------------------------------------------------
