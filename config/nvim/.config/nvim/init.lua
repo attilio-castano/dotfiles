@@ -27,11 +27,12 @@ end
 -----------------------------------------------------------------------
 -- 2. Editor behaviour tweaks (feel free to extend)
 -----------------------------------------------------------------------
--- Disable built-in line numbers to use custom statuscolumn
-vim.opt.number         = false
-vim.opt.relativenumber = false
+-- Enable native number engine; statuscol.nvim will render via statuscolumn
+vim.opt.number         = true
+vim.opt.relativenumber = true
 -- Slim gutter: let signs appear only when needed
-vim.opt.signcolumn     = "auto"
+-- Cap signs to a single column when present
+vim.opt.signcolumn     = "auto:1"
 vim.opt.numberwidth    = 5
 
 -- Status column is handled by statuscol.nvim (see plugins/statuscol.lua)
@@ -51,6 +52,22 @@ vim.api.nvim_create_autocmd({ "FocusGained", "TermLeave", "TermClose", "BufEnter
     if bt == "" and vim.bo[args.buf].modifiable then
       pcall(vim.cmd, "silent! checktime")
     end
+  end,
+})
+
+-- Dynamic numberwidth: adapt to buffer line count (2..4)
+local function update_numberwidth()
+  local total = vim.api.nvim_buf_line_count(0)
+  local digits = tostring(total):len()
+  local width = math.max(2, math.min(4, digits))
+  vim.opt_local.numberwidth = width
+end
+
+vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter", "BufReadPost", "BufWritePost", "VimResized" }, {
+  pattern = "*",
+  desc = "Adjust numberwidth per window based on line count",
+  callback = function()
+    pcall(update_numberwidth)
   end,
 })
 -----------------------------------------------------------------------
