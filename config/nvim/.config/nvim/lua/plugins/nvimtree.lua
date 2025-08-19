@@ -59,6 +59,10 @@ return {
                 enable = true,
                 auto_open = true,
             },
+            filesystem_watchers = {
+                enable = true,
+                debounce_delay = 200,
+            },
             view = {
                 width = 32,
                 cursorline = false,
@@ -77,6 +81,27 @@ return {
                 open_file = { quit_on_open = false },
             },
             on_attach = my_on_attach,
+        })
+
+        -- Refresh tree when returning focus to Neovim (debounced) – only if visible
+        local refresh_grp = vim.api.nvim_create_augroup("NvimTreeFocusRefresh", { clear = true })
+        local pending = false
+        local function schedule_refresh()
+            if pending then return end
+            pending = true
+            vim.defer_fn(function()
+                pending = false
+                local ok, api = pcall(require, "nvim-tree.api")
+                if ok and api.tree.is_visible() then
+                    pcall(vim.cmd, "silent! NvimTreeRefresh")
+                end
+            end, 400)
+        end
+
+        vim.api.nvim_create_autocmd("FocusGained", {
+            group = refresh_grp,
+            callback = schedule_refresh,
+            desc = "nvim-tree: refresh on focus (debounced)",
         })
         end,
         },
