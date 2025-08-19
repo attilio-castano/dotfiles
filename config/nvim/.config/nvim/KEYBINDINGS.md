@@ -16,14 +16,12 @@ Basic editor commands and window navigation.
 | Mode | Keys | Action |
 |------|------|--------|
 | **Normal** | `<leader>w` | Save current buffer |
-| Normal | `<leader>y` | Yank to system clipboard |
 | Normal | `<leader>h` | Create horizontal split |
 | Normal | `<leader>v` | Create vertical split |
 | Normal | `<A-h>` | Focus split **left** |
 | Normal | `<A-j>` | Focus split **below** |
 | Normal | `<A-k>` | Focus split **above** |
 | Normal | `<A-l>` | Focus split **right** |
-| **Visual** | `<leader>y` | Yank selection to system clipboard |
 
 ---
 

@@ -4,6 +4,13 @@
 -----------------------------------------------------------------------
 
 -----------------------------------------------------------------------
+-- Loader (Neovim 0.9+)
+-----------------------------------------------------------------------
+if vim.loader then
+    vim.loader.enable()
+end
+
+-----------------------------------------------------------------------
 -- 0. Leader / globals
 -----------------------------------------------------------------------
 vim.g.mapleader = " "
@@ -12,64 +19,15 @@ vim.g.maplocalleader = ";"
 -----------------------------------------------------------------------
 -- 1. Terminal / GUI settings
 -----------------------------------------------------------------------
-local in_ghostty = require("util.ghostty").active
-
-vim.opt.termguicolors = true
-vim.opt.background   = "dark"
-
--- Note: Transparent backgrounds are handled by Catppuccin in colorscheme.lua
--- We only set diagnostic undercurls here for better visibility
-if in_ghostty then
-    vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { undercurl = true, sp = "#ff5c5c" })
-    vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn",  { undercurl = true, sp = "#f0e130" })
-end
+require("util.terminal").setup()
 
 -----------------------------------------------------------------------
 -- 2. Editor behaviour tweaks (feel free to extend)
 -----------------------------------------------------------------------
--- Enable native number engine; statuscol.nvim will render via statuscolumn
-vim.opt.number         = true
-vim.opt.relativenumber = true
--- Slim gutter: let signs appear only when needed
--- Cap signs to a single column when present
-vim.opt.signcolumn     = "auto:1"
-vim.opt.numberwidth    = 5
-
--- Status column is handled by statuscol.nvim (see plugins/statuscol.lua)
-vim.opt.clipboard      = "unnamedplus"
-vim.opt.updatetime     = 250
-vim.opt.shiftwidth = 4
-vim.opt.tabstop = 4
-vim.opt.expandtab = true
-
--- Auto-reload files changed outside of Neovim
-vim.opt.autoread = true
-vim.api.nvim_create_autocmd({ "FocusGained", "TermLeave", "TermClose", "BufEnter", "BufWinEnter" }, {
-  pattern = "*",
-  desc = "Auto-reload changed files on focus/buffer switch",
-  callback = function(args)
-    local bt = vim.bo[args.buf].buftype
-    if bt == "" and vim.bo[args.buf].modifiable then
-      pcall(vim.cmd, "silent! checktime")
-    end
-  end,
-})
-
--- Dynamic numberwidth: adapt to buffer line count (2..4)
-local function update_numberwidth()
-  local total = vim.api.nvim_buf_line_count(0)
-  local digits = tostring(total):len()
-  local width = math.max(2, math.min(4, digits))
-  vim.opt_local.numberwidth = width
-end
-
-vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter", "BufReadPost", "BufWritePost", "VimResized" }, {
-  pattern = "*",
-  desc = "Adjust numberwidth per window based on line count",
-  callback = function()
-    pcall(update_numberwidth)
-  end,
-})
+-- Editor defaults and helpers are modularized under util/
+require("util.editor").setup()
+require("util.autoreload").setup()
+require("util.gutter").setup()
 -----------------------------------------------------------------------
 -- 3. Bootstrap lazy.nvim
 -----------------------------------------------------------------------
@@ -129,6 +87,3 @@ map("n", "<leader>m", "<cmd>RenderMarkdown toggle<cr>", { desc = "Toggle markdow
 -- Split creation keybindings
 map("n", "<leader>h", "<cmd>split<cr>", { desc = "Split horizontal" })
 map("n", "<leader>v", "<cmd>vsplit<cr>", { desc = "Split vertical" })
--- Clipboard yank keybindings
-map("v", "<leader>y", '"+y', { desc = "Yank to clipboard" })
-map("n", "<leader>y", '"+y', { desc = "Yank to clipboard" })

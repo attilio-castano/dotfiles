@@ -46,8 +46,7 @@ No additional steps are required because the config bootstraps
 * **render-markdown** for beautiful in-terminal markdown rendering with syntax highlighting
 * **bufferline** / **lualine** UI polish with transparent background
   when inside Ghostty
-* **Enhanced clipboard** with `<leader>y` for explicit system clipboard yanking
-* Sensible defaults: absolute line numbers, clipboard=unnamedplus,
+* Sensible defaults: absolute line numbers, clipboard=unnamed,unnamedplus,
   `updatetime=250`, etc.
 
 ---
@@ -112,5 +111,9 @@ lazy-lock.json          plugin lock-file (generated)
 ```
 
 ---
+
+## Health Check
+
+- Run `:checkhealth` to verify environment and providers.
 
 [folke/lazy.nvim]: https://github.com/folke/lazy.nvim
