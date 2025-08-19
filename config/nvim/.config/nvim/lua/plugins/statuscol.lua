@@ -13,7 +13,7 @@ return {
     statuscol.setup({
       -- Keep things minimal: no extra separators or padding
       separator = "",
-      setopt = true,  -- Have the plugin set the global 'statuscolumn'
+      setopt = false, -- We will set 'statuscolumn' only for file buffers
       relculright = false,
       segments = {
         -- Signs column (diagnostics/gitsigns). Renders via built-in %s; width capped by signcolumn option.
@@ -23,6 +23,26 @@ return {
         -- Fold column – no extra spacer, just folds
         { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
       },
+    })
+
+    -- Apply statuscolumn only to "real" file buffers (buftype == "").
+    -- Clear it for plugin/auxiliary windows (tree, help, terminals, etc.).
+    local function apply_statuscol(buf)
+      local bt = vim.bo[buf].buftype
+      if bt == "" then
+        vim.opt_local.statuscolumn = "%{%v:lua.require('statuscol').get_statuscol_string()%}"
+      else
+        vim.opt_local.statuscolumn = ""
+      end
+    end
+
+    local grp = vim.api.nvim_create_augroup("StatusColLocal", { clear = true })
+    vim.api.nvim_create_autocmd({ "BufWinEnter", "BufReadPost", "WinEnter" }, {
+      group = grp,
+      desc = "Apply statuscol only to file buffers",
+      callback = function(args)
+        apply_statuscol(args.buf)
+      end,
     })
 
     -- Hide statuscolumn entirely in special buffers
