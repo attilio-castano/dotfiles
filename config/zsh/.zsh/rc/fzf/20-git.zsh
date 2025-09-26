@@ -524,6 +524,67 @@ gwt_add() {
 
 alias gwt-add='gwt_add'
 
+gwt_remove() {
+    if ! command -v git &>/dev/null; then
+        echo "git is not installed"
+        return 1
+    fi
+
+    local repo_root
+    repo_root=$(__fzf_git_repo_root)
+    if [[ -z $repo_root ]]; then
+        echo "Not inside a git repository"
+        return 1
+    fi
+
+    local selection
+    selection=$(
+        __fzf_git_worktree_records |
+        FZF_GIT_MODULE_PATH="$__FZF_GIT_MODULE_PATH" \
+        FZF_GIT_BIN="$__FZF_GIT_BIN" \
+            fzf --delimiter $'\t' --with-nth=1 \
+                --bind "esc:abort" \
+                --preview "zsh -c 'source \"$FZF_GIT_MODULE_PATH\"; __fzf_git_worktree_preview \"$1\" \"$2\" \"$3\"' _ {2} {3} {4}"
+    )
+
+    [[ -z $selection ]] && return 1
+
+    local display path branch head wt_summary
+    IFS=$'\t' read -r display path branch head wt_summary <<<"$selection"
+
+    if [[ -z $path ]]; then
+        echo "Missing worktree path" >&2
+        return 1
+    fi
+
+    if [[ $path == $repo_root ]]; then
+        echo "Cannot remove the primary worktree ($path)" >&2
+        return 1
+    fi
+
+    printf "Remove worktree '%s' (%s)? [y/N] " "$display" "$path"
+    local reply
+    read -r reply
+    [[ ${reply:l} == y* ]] || return 1
+
+    local -a remove_args
+    remove_args=(worktree remove)
+    if [[ $wt_summary == *locked* || $wt_summary == *prunable* ]]; then
+        remove_args+=(--force)
+    fi
+    remove_args+=("$path")
+
+    if ! __fzf_git "${remove_args[@]}"; then
+        echo "Failed to remove worktree" >&2
+        return 1
+    fi
+
+    echo "Removed worktree '$display'"
+    __fzf_git_collect_worktrees >/dev/null 2>&1 || true
+}
+
+alias gwt-remove='gwt_remove'
+
 glog() {
     if ! command -v git &>/dev/null; then
         echo "git is not installed"
