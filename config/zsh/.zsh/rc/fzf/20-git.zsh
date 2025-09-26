@@ -428,7 +428,7 @@ gb() {
     fi
 }
 
-gwt() {
+gwt_list() {
     if ! command -v git &>/dev/null; then
         echo "git is not installed"
         return 1
@@ -523,6 +523,7 @@ gwt_add() {
 }
 
 alias gwt-add='gwt_add'
+alias gwt-list='gwt_list'
 
 gwt_remove() {
     if ! command -v git &>/dev/null; then
