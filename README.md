@@ -37,3 +37,25 @@ Personal development environment configuration.
 - Tmux
 - Starship prompt
 - Various CLI tools (bat, ripgrep, fzf, etc.)
+
+## Neovim Profiles
+
+The default Neovim profile now lives under `config/nvim` and uses
+LazyVim.
+
+The previous handmade Neovim setup has been preserved as a legacy
+profile under `config/nvim-handrolled`.
+
+Use the default profile with plain `nvim`.
+
+To launch the legacy profile explicitly:
+
+```bash
+NVIM_APPNAME=nvim-handrolled nvim
+```
+
+If the zsh config is loaded, you can also use:
+
+```bash
+nhandrolled
+```

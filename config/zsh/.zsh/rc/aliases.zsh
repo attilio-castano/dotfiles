@@ -2,6 +2,7 @@
 alias cat='bat'
 alias bcat='bat --paging=never'
 n() { if [ "$#" -eq 0 ]; then nvim .; else nvim "$@"; fi; }
+nhandrolled() { NVIM_APPNAME=nvim-handrolled nvim "$@"; }
 
 # File system
 alias ls='eza -lh --group-directories-first --icons=auto'
