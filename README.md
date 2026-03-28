@@ -37,3 +37,23 @@ Personal development environment configuration.
 - Tmux
 - Starship prompt
 - Various CLI tools (bat, ripgrep, fzf, etc.)
+
+## Parallel LazyVim Migration
+
+The current handmade Neovim config remains the default hot path under
+`config/nvim`.
+
+A separate staged LazyVim profile lives under `config/nvim-lazy` and is
+meant to be launched with a separate app name:
+
+```bash
+NVIM_APPNAME=nvim-lazy nvim
+```
+
+If the zsh config is loaded, you can also use:
+
+```bash
+nlazy
+```
+
+This keeps the existing config intact while testing LazyVim in parallel.
