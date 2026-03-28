@@ -71,7 +71,7 @@ return {
                         keymap = "SPC f c",
                         key_hl = "Number",
                         key_format = " %s",
-                        action = "edit ~/.config/nvim/init.lua",
+                        action = "edit " .. vim.fn.fnameescape(vim.fn.stdpath("config") .. "/init.lua"),
                     },
                     {
                         icon = " ",
