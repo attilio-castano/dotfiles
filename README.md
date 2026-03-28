@@ -38,22 +38,24 @@ Personal development environment configuration.
 - Starship prompt
 - Various CLI tools (bat, ripgrep, fzf, etc.)
 
-## Parallel LazyVim Migration
+## Neovim Profiles
 
-The current handmade Neovim config remains the default hot path under
-`config/nvim`.
+The default Neovim profile now lives under `config/nvim` and uses
+LazyVim.
 
-A separate staged LazyVim profile lives under `config/nvim-lazy` and is
-meant to be launched with a separate app name:
+The previous handmade Neovim setup has been preserved as a legacy
+profile under `config/nvim-handrolled`.
+
+Use the default profile with plain `nvim`.
+
+To launch the legacy profile explicitly:
 
 ```bash
-NVIM_APPNAME=nvim-lazy nvim
+NVIM_APPNAME=nvim-handrolled nvim
 ```
 
 If the zsh config is loaded, you can also use:
 
 ```bash
-nlazy
+nhandrolled
 ```
-
-This keeps the existing config intact while testing LazyVim in parallel.
