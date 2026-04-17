@@ -9,3 +9,9 @@ if [[ -d "$DOTFILES/config/zsh/.zsh/rc" ]]; then
 fi
 
 # Interactive shell configuration can go here
+# bun completions
+[ -s "/Users/attiliocastano/.bun/_bun" ] && source "/Users/attiliocastano/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
