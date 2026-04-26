@@ -1,6 +1,11 @@
 # Zsh configuration file
 # Environment variables and early setup are in .zshenv
 
+# Load shared helpers used by rc modules, including non-login shells
+for shared_file in "$DOTFILES/config/zsh/.zsh/shared"/*.zsh(N); do
+    source "$shared_file"
+done
+
 # Load all interactive shell configurations
 if [[ -d "$DOTFILES/config/zsh/.zsh/rc" ]]; then
     for rc_file in "$DOTFILES/config/zsh/.zsh/rc"/*.zsh(N); do
