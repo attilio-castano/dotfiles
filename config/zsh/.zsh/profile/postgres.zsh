@@ -2,8 +2,12 @@
 # Adds libpq tools (psql, pg_dump, etc.) to PATH if installed
 
 # Source dependencies
-[[ -f "$DOTFILES/config/zsh/.zsh/profile/platform.zsh" ]] && source "$DOTFILES/config/zsh/.zsh/profile/platform.zsh"
-[[ -f "$DOTFILES/config/zsh/.zsh/profile/path.zsh" ]] && source "$DOTFILES/config/zsh/.zsh/profile/path.zsh"
+if ! (( $+functions[is_macos] )) && [[ -f "$DOTFILES/config/zsh/.zsh/shared/platform.zsh" ]]; then
+    source "$DOTFILES/config/zsh/.zsh/shared/platform.zsh"
+fi
+if ! (( $+functions[path_add] )) && [[ -f "$DOTFILES/config/zsh/.zsh/shared/path.zsh" ]]; then
+    source "$DOTFILES/config/zsh/.zsh/shared/path.zsh"
+fi
 
 # PostgreSQL tools via Homebrew (macOS)
 if is_macos && command -v brew &> /dev/null; then
